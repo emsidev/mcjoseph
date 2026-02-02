@@ -73,4 +73,10 @@
   body {
     @apply bg-background text-foreground;
   }
+  ::selection {
+    @apply bg-sky-500/30 text-sky-900;
+  }
+  .dark ::selection {
+    @apply bg-sky-500/40 text-sky-100;
+  }
 }

@@ -14,13 +14,13 @@ const isDark = computed({
 <template>
   <UTooltip text="Toggle theme" :ui="{ popper: { strategy: 'absolute' } }">
     <button
-      class="relative px-3 py-4 flex items-center justify-center transition hover:text-primary-500 dark:hover:text-primary-400"
+      class="relative flex h-full w-full items-center justify-center rounded-full text-gray-600 transition hover:text-primary-500 dark:text-gray-400 dark:hover:text-primary-400"
       @click="isDark = !isDark"
     >
       <Icon
         aria-hidden="true"
         :name="isDark ? 'solar:sun-2-outline' : 'solar:moon-outline'"
-        class="w-5 h-5"
+        style="width: var(--dock-icon-size, 20px); height: var(--dock-icon-size, 20px);"
       />
       <span class="sr-only">Toggle theme</span>
     </button>

@@ -1,5 +1,6 @@
 {
     "id": 1,
     "label": "Claude",
-    "url": "https://claude.com/product/overview"
+    "url": "https://claude.com/product/overview",
+    "reason": "My go-to AI assistant for coding, writing, and problem-solving."
 }

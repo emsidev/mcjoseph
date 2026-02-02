@@ -13,11 +13,15 @@
             :alt="bookmark.label"
             :ui="{ rounded: 'rounded-md' }"
           />
-          <p class="truncate text-gray-700 dark:text-gray-200">
-            {{ bookmark.label }}
-          </p>
-          <span class="flex-1"></span>
-          <span class="text-xs font-medium text-gray-400 dark:text-gray-600">
+          <div class="min-w-0 flex-1">
+            <p class="truncate text-gray-700 dark:text-gray-200">
+              {{ bookmark.label }}
+            </p>
+            <p v-if="bookmark.reason" class="truncate text-xs text-gray-400 dark:text-gray-500">
+              {{ bookmark.reason }}
+            </p>
+          </div>
+          <span class="text-xs font-medium text-gray-400 dark:text-gray-600 shrink-0">
             {{ getHost(bookmark.url) }}
           </span>
         </a>

@@ -12,7 +12,7 @@
       >
         {{ item.name }}
       </p>
-      <p class="text-sm text-gray-500">{{ item.description }}</p>
+      <p class="text-sm text-gray-500" v-html="item.description"></p>
     </NuxtLink>
     <div v-else class="group">
       <p
@@ -20,7 +20,7 @@
       >
         {{ item.name }}
       </p>
-      <p class="text-sm text-gray-500">{{ item.description }}</p>
+      <p class="text-sm text-gray-500" v-html="item.description"></p>
     </div>
   </li>
 </template>
