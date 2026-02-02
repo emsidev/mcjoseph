@@ -1,6 +1,11 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
-
+  runtimeConfig: {
+    public: {
+      supabaseUrl: process.env.SUPABASE_URL,
+      supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
+    },
+  },
   modules: [
     "@nuxt/ui",
     "@nuxtjs/google-fonts",
@@ -8,8 +13,16 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@nuxt/content",
     "@nuxthq/studio",
-    "@vueuse/nuxt"
+    "@vueuse/nuxt",
+    "@nuxtjs/seo",
   ],
+
+  site: {
+    url: "https://mcjoseph.vercel.app",
+    name: "Mc Joseph Agbanlog",
+    description: "Fullstack Developer from Quezon City, Philippines.",
+    defaultLocale: "en",
+  },
 
   ui: {
     icons: ["heroicons", "lucide"],
@@ -41,5 +54,5 @@ export default defineNuxtConfig({
     },
   },
 
-  compatibilityDate: "2026-02-02"
+  compatibilityDate: "2026-02-02",
 });

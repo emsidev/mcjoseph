@@ -15,7 +15,7 @@
 const description =
   "A collection of my favorite projects.";
 useHead({
-  title: "Projects | Mc Joseph Agbanlog",
+  title: "Projects",
   meta: [{ name: "description", content: description }],
 });
 

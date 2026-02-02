@@ -30,7 +30,7 @@
 const description =
   "A collection of random facts, skills, and experiences.";
 useHead({
-  title: "Facts about me | Mc Joseph Agbanlog",
+  title: "Facts about me",
   meta: [{ name: "description", content: description }],
 });
 const { data: items } = await useAsyncData("facts", () =>

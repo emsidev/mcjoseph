@@ -1,9 +1,25 @@
+<script setup lang="ts">
+useHead({
+  titleTemplate: (titleChunk) => {
+    return titleChunk ? `${titleChunk} - Mc Joseph Agbanlog` : 'Mc Joseph Agbanlog - Fullstack Developer';
+  }
+})
+
+useSeoMeta({
+  ogImage: '/avatar.png',
+  twitterTitle: 'Mc Joseph Agbanlog',
+  twitterDescription: 'Fullstack Developer from Quezon City, Philippines.',
+  twitterCard: 'summary_large_image',
+})
+</script>
+
 <template>
-  <NuxtLoadingIndicator color="#14b8a6" />
+  <NuxtLoadingIndicator color="#0ea5e9" />
   <AppNavbar />
   <div class="h-32"></div>
   <UContainer>
     <NuxtPage />
+    <UNotifications />
   </UContainer>
   <div class="h-32"></div>
   <AppFooter />

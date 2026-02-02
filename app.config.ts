@@ -12,6 +12,11 @@ export default defineAppConfig({
     button: {
       rounded:
         "rounded-md transition-transform active:scale-x-[0.98] active:scale-y-[0.99]",
+      color: {
+        secondary: {
+          solid: "shadow-sm bg-secondary text-secondary-foreground hover:bg-secondary-foreground hover:text-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 transition-colors duration-200",
+        },
+      },
     },
     modal: {
       overlay: {

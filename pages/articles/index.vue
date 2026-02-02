@@ -13,7 +13,7 @@
 const description =
   "All of my long-form thoughts on programming, user interfaces, product design, and more, collected in chronological order.";
 useHead({
-  title: "Articles | Mc Joseph Agbanlog",
+  title: "Articles",
   meta: [{ name: "description", content: description }],
 });
 
