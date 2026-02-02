@@ -1,44 +1,56 @@
 <script setup lang="ts">
 import type { CSSProperties } from "vue";
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 
 interface Props {
   class?: string;
   width?: number;
   height?: number;
+  mobileWidth?: number;
+  mobileHeight?: number;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   width: 320,
   height: 400,
+  mobileWidth: 280,
+  mobileHeight: 350,
 });
 
 const isVisible = ref(false);
 const container = ref<HTMLElement | null>(null);
 const hasPopped = ref(false);
+const isMobile = ref(false);
+
+if (process.client) {
+  isMobile.value = window.innerWidth < 768;
+}
 
 const previewStyle = computed<CSSProperties>(() => {
   if (!container.value) return {};
 
-  const offset = 12;
-  const previewWidth = props.width;
+  const offset = isMobile.value ? 8 : 12;
+  const previewWidth = isMobile.value ? props.mobileWidth : props.width;
   const viewportWidth = window.innerWidth;
   const viewportHeight = window.innerHeight;
+  const padding = isMobile.value ? 12 : 16;
 
   const triggerRect = container.value.getBoundingClientRect();
 
-  // Center horizontally relative to trigger
+  // Center horizontally ve to trigger
   let x = triggerRect.left + (triggerRect.width / 2) - (previewWidth / 2);
   
   // Keep within horizontal bounds
-  x = Math.min(Math.max(16, x), viewportWidth - previewWidth - 16);
+  x = Math.min(Math.max(padding, x), viewportWidth - previewWidth - padding);
+
+  const previewHeight = isMobile.value ? props.mobileHeight : props.height;
 
   // Position below with offset
   let y = triggerRect.bottom + offset;
   
   // If it goes off-screen at the bottom, flip to top
-  if (y + props.height > viewportHeight - 16) {
-    y = triggerRect.top - props.height - offset;
+  if (y + previewHeight > viewportHeight - padding) {
+    y = triggerRect.top - previewHeight - offset;
   }
 
   return {
@@ -84,6 +96,29 @@ function hidePreview() {
     hasPopped.value = false;
   }, 300);
 }
+
+function handleClickOutside(event: MouseEvent) {
+  if (!container.value) return;
+  
+  if (!container.value.contains(event.target as Node)) {
+    hidePreview();
+  }
+}
+
+onMounted(() => {
+  if (process.client) {
+    const handleResize = () => {
+      isMobile.value = window.innerWidth < 768;
+    };
+    window.addEventListener('resize', handleResize);
+    document.addEventListener('click', handleClickOutside);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }
+});
 </script>
 
 <template>
@@ -91,8 +126,9 @@ function hidePreview() {
     ref="container"
     class="relative inline-block"
     :class="[props.class]"
-    @mouseenter="showPreview"
-    @mouseleave="hidePreview"
+    @mouseenter="isMobile ? null : showPreview()"
+    @mouseleave="isMobile ? null : hidePreview()"
+    @click.stop="isMobile ? (isVisible ? hidePreview() : showPreview()) : null"
   >
     <!-- Trigger -->
     <div class="cursor-pointer">

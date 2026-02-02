@@ -21,7 +21,7 @@ const buttonRef = ref<HTMLButtonElement>();
     class="group relative w-auto cursor-pointer overflow-hidden rounded-full border border-sky-500 bg-sky-500 p-2 px-6 text-center font-semibold text-white disabled:opacity-50 disabled:cursor-not-allowed"
     :class="[props.class]"
   >
-    <div class="flex items-center gap-2">
+    <div class="flex items-center justify-center gap-2">
       <div
         class="size-2 scale-100 rounded-lg bg-white transition-all duration-300 group-hover:scale-[100.8]"
       />

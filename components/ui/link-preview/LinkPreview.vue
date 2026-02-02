@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import type { CSSProperties } from "vue";
-import { computed, reactive, ref } from "vue";
+import { computed, reactive, ref, onMounted } from "vue";
 
 interface BaseProps {
   class?: string;
   linkClass?: string;
   width?: number;
   height?: number;
+  mobileWidth?: number;
+  mobileHeight?: number;
 }
 
 // Props for static image mode
@@ -31,12 +33,19 @@ const props = withDefaults(defineProps<Props>(), {
   url: "",
   width: 200,
   height: 125,
+  mobileWidth: 160,
+  mobileHeight: 100,
 });
 
 const isVisible = ref(false);
 const isLoading = ref(true);
 const preview = ref<HTMLElement | null>(null);
 const hasPopped = ref(false);
+const isMobile = ref(false);
+
+if (process.client) {
+  isMobile.value = window.innerWidth < 768;
+}
 
 // Generate preview URL
 const previewSrc = computed(() => {
@@ -67,13 +76,14 @@ const mousePosition = reactive({
 const previewStyle = computed<CSSProperties>(() => {
   if (!preview.value) return {};
 
-  const offset = 20;
-  const previewWidth = props.width;
-  const previewHeight = props.height;
+  const offset = isMobile.value ? 10 : 20;
+  const previewWidth = isMobile.value ? props.mobileWidth : props.width;
+  const previewHeight = isMobile.value ? props.mobileHeight : props.height;
   const viewportWidth = window.innerWidth;
+  const padding = 8;
 
   let x = mousePosition.x - previewWidth / 2;
-  x = Math.min(Math.max(0, x), viewportWidth - previewWidth);
+  x = Math.min(Math.max(padding, x), viewportWidth - previewWidth - padding);
 
   const linkRect = preview.value.parentElement?.getBoundingClientRect();
   const y = linkRect ? linkRect.top - previewHeight - offset : 0;
@@ -88,10 +98,14 @@ const previewStyle = computed<CSSProperties>(() => {
 });
 
 // Image specific styling
-const imageStyle = computed<CSSProperties>(() => ({
-  width: `${props.width}px`,
-  height: `${props.height}px`,
-}));
+const imageStyle = computed<CSSProperties>(() => {
+  const w = isMobile.value ? props.mobileWidth : props.width;
+  const h = isMobile.value ? props.mobileHeight : props.height;
+  return {
+    width: `${w}px`,
+    height: `${h}px`,
+  };
+});
 
 // Pop animation class
 const popClass = computed(() => {
@@ -116,9 +130,42 @@ function hidePreview() {
   hasPopped.value = false;
 }
 
+function handleClickOutside(event: MouseEvent) {
+  if (!preview.value) return;
+  
+  const previewElement = preview.value;
+  const triggerElement = preview.value.parentElement;
+  
+  if (!previewElement.contains(event.target as Node) && 
+      !triggerElement?.contains(event.target as Node)) {
+    hidePreview();
+  }
+}
+
+function handleTriggerClick() {
+  if (isMobile.value) {
+    isVisible.value ? hidePreview() : showPreview();
+  }
+}
+
 function handleImageLoad() {
   isLoading.value = false;
 }
+
+onMounted(() => {
+  if (process.client) {
+    const handleResize = () => {
+      isMobile.value = window.innerWidth < 768;
+    };
+    window.addEventListener('resize', handleResize);
+    document.addEventListener('click', handleClickOutside);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }
+});
 </script>
 
 <template>
@@ -129,11 +176,13 @@ function handleImageLoad() {
     <!-- Trigger -->
     <NuxtLink
       :to="url"
+      target="_blank"
       class="text-black dark:text-white"
       :class="[props.linkClass]"
       @mousemove="handleMouseMove"
-      @mouseenter="showPreview"
-      @mouseleave="hidePreview"
+      @mouseenter="isMobile ? null : showPreview()"
+      @mouseleave="isMobile ? null : hidePreview()"
+      @click.stop="isMobile ? handleTriggerClick() : null"
     >
       <slot />
     </NuxtLink>

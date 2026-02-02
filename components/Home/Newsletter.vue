@@ -87,7 +87,7 @@ async function subscribe() {
     </p>
 
     <div class="mt-6 space-y-3">
-      <div class="flex items-center gap-3">
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
         <div class="flex-1">
             <div class="group relative w-full h-full rounded-xl border transition-all duration-200 px-4 py-2.5" :class="[ 
               error
@@ -103,9 +103,9 @@ async function subscribe() {
             </label>
               <input v-model="email" type="email" placeholder="john@example.com" @input="clearError"
                 @keyup.enter="subscribe" :disabled="loading"
-                class="block w-full h-full border-0 p-0 text-base text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:ring-0 bg-transparent outline-none disabled:opacity-50 disabled:cursor-not-allowed" />
+                class="block w-full h-full border-0 p-0 text-sm sm:text-base text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:ring-0 bg-transparent outline-none disabled:opacity-50 disabled:cursor-not-allowed" />
           </div>
-          <p v-if="error" class="mt-1.5 text-sm text-red-600 dark:text-red-400">
+          <p v-if="error" class="mt-1.5 text-xs sm:text-sm text-red-600 dark:text-red-400">
             {{ error }}
           </p>
         </div>
@@ -113,7 +113,7 @@ async function subscribe() {
           type="submit"
           :text="loading ? 'Joining...' : 'Join'"
           :disabled="loading || !email"
-          :class="(loading || !email ? 'pointer-events-none opacity-50 ' : '') + 'w-full h-full sm:w-auto px-10 shadow-lg shadow-sky-500/10'"
+          :class="(loading || !email ? 'pointer-events-none opacity-50 ' : '') + 'px-6 sm:px-10 py-2.5 shadow-lg shadow-sky-500/10'"
           @click="subscribe"
         />
       </div>
