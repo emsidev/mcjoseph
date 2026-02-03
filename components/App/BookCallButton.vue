@@ -1,9 +1,5 @@
 <template>
-  <UiInteractiveHoverButton 
-    text="Book a Call" 
-    v-bind="$attrs"
-    @click="openCalPopup"
-  />
+  <UiInteractiveHoverButton text="Book a Call" v-bind="$attrs" class="w-full" @click="openCalPopup" />
 </template>
 
 <script setup lang="ts">

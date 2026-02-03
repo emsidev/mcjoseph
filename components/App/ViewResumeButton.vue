@@ -1,14 +1,6 @@
 <template>
-  <UButton
-    to="/Mc Agbanlog_Resume-2025.pdf"
-    target="_blank"
-    rel="noopener noreferrer"
-    color="secondary"
-    variant="solid"
-    size="lg"
-    class="rounded-full px-6 font-semibold justify-center"
-    v-bind="$attrs"
-  >
+  <UButton to="/Mc Agbanlog_Resume-2025.pdf" target="_blank" rel="noopener noreferrer" color="secondary" variant="solid"
+    size="lg" class="rounded-full w-full px-6 font-semibold justify-center" v-bind="$attrs">
     View Resume
   </UButton>
 </template>

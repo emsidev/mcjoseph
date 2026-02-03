@@ -132,12 +132,12 @@ function hidePreview() {
 
 function handleClickOutside(event: MouseEvent) {
   if (!preview.value) return;
-  
+
   const previewElement = preview.value;
   const triggerElement = preview.value.parentElement;
-  
-  if (!previewElement.contains(event.target as Node) && 
-      !triggerElement?.contains(event.target as Node)) {
+
+  if (!previewElement.contains(event.target as Node) &&
+    !triggerElement?.contains(event.target as Node)) {
     hidePreview();
   }
 }
@@ -165,7 +165,7 @@ onMounted(() => {
     window.addEventListener('resize', handleResize);
     window.addEventListener('scroll', handleScroll, { passive: true });
     document.addEventListener('click', handleClickOutside);
-    
+
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('scroll', handleScroll);
@@ -176,47 +176,21 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-    class="relative inline-block"
-    :class="[props.class]"
-  >
+  <div class="relative inline-block" :class="[props.class]">
     <!-- Trigger -->
-    <NuxtLink
-      :to="url"
-      target="_blank"
-      class="text-black dark:text-white"
-      :class="[props.linkClass]"
-      @mousemove="handleMouseMove"
-      @mouseenter="isMobile ? null : showPreview()"
-      @mouseleave="isMobile ? null : hidePreview()"
-      @click.stop="isMobile ? handleTriggerClick() : null"
-    >
+    <NuxtLink :to="url" target="_blank" class="text-black dark:text-white" :class="[props.linkClass]"
+      @mousemove="handleMouseMove" @mouseenter="isMobile ? null : showPreview()"
+      @mouseleave="isMobile ? null : hidePreview()" @click.stop="isMobile ? handleTriggerClick() : null">
       <slot />
     </NuxtLink>
 
     <!-- Preview -->
-    <div
-      v-if="isVisible"
-      ref="preview"
-      class="pointer-events-none absolute z-50"
-      :style="previewStyle"
-    >
-      <div
-        class="overflow-hidden rounded-xl shadow-xl"
-        :class="[popClass, { 'transform-gpu': !props.isStatic }]"
-      >
-        <div
-          class="block rounded-xl border-2 border-transparent bg-white p-1 shadow-lg dark:bg-gray-900"
-        >
-          <img
-            :src="previewSrc"
-            :width="width"
-            :height="height"
-            class="size-full rounded-lg object-cover"
-            :style="imageStyle"
-            alt="preview"
-            @load="handleImageLoad"
-          />
+    <div v-if="isVisible" ref="preview" class="pointer-events-none absolute z-50 transition-container"
+      :style="previewStyle">
+      <div class="overflow-hidden rounded-xl shadow-xl" :class="[popClass, { 'transform-gpu': !props.isStatic }]">
+        <div class="block rounded-xl border-2 border-transparent bg-white p-1 shadow-lg dark:bg-gray-900">
+          <img :src="previewSrc" :width="width" :height="height" class="size-full rounded-lg object-cover"
+            :style="imageStyle" alt="preview" @load="handleImageLoad" />
         </div>
       </div>
     </div>
@@ -225,10 +199,9 @@ onMounted(() => {
 
 <style scoped>
 .transform-gpu {
-  transform: scale3d(0, 0, 1);
+  transform: scale3d(0.26, 0.26, 1);
   transform-origin: center bottom;
   will-change: transform;
-  backface-visibility: hidden;
 }
 
 .animate-pop {
@@ -240,12 +213,15 @@ onMounted(() => {
   0% {
     transform: scale3d(0.26, 0.26, 1);
   }
+
   25% {
     transform: scale3d(1.1, 1.1, 1);
   }
+
   65% {
     transform: scale3d(0.98, 0.98, 1);
   }
+
   100% {
     transform: scale3d(1, 1, 1);
   }

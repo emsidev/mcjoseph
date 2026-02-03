@@ -4,6 +4,7 @@ import { useSupabase } from '~/lib/supabase';
 
 const toast = useToast();
 const email = ref('');
+const honeypot = ref('');
 const loading = ref(false);
 const error = ref('');
 
@@ -32,6 +33,12 @@ function clearError() {
 }
 
 async function subscribe() {
+  // Honeypot check: if the hidden field is filled, silently ignore
+  if (honeypot.value) {
+    console.warn('Bot detected via honeypot');
+    return;
+  }
+
   if (!validateEmail()) {
     return;
   }
@@ -87,13 +94,18 @@ async function subscribe() {
     </p>
 
     <div class="mt-6 space-y-3">
+      <!-- Honeypot field (hidden from humans) -->
+      <div class="sr-only" aria-hidden="true">
+        <input v-model="honeypot" type="text" tabindex="-1" autocomplete="off" />
+      </div>
+
       <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
         <div class="flex-1">
-            <div class="group relative w-full h-full rounded-xl border transition-all duration-200 px-4 py-2.5" :class="[ 
-              error
-                ? 'border-red-500 ring-1 ring-red-500 bg-red-50/50 dark:bg-red-900/10'
-                : 'border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-white/5 focus-within:border-sky-500 focus-within:ring-1 focus-within:ring-sky-500'
-            ]">
+          <div class="group relative w-full h-full rounded-xl border transition-all duration-200 px-4 py-2.5" :class="[
+            error
+              ? 'border-red-500 ring-1 ring-red-500 bg-red-50/50 dark:bg-red-900/10'
+              : 'border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-white/5 focus-within:border-sky-500 focus-within:ring-1 focus-within:ring-sky-500'
+          ]">
             <label class="block text-[11px] font-semibold transition-colors uppercase tracking-wider" :class="[
               error
                 ? 'text-red-500'
@@ -101,21 +113,17 @@ async function subscribe() {
             ]">
               Email
             </label>
-              <input v-model="email" type="email" placeholder="john@example.com" @input="clearError"
-                @keyup.enter="subscribe" :disabled="loading"
-                class="block w-full h-full border-0 p-0 text-sm sm:text-base text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:ring-0 bg-transparent outline-none disabled:opacity-50 disabled:cursor-not-allowed" />
+            <input v-model="email" type="email" placeholder="john@example.com" @input="clearError"
+              @keyup.enter="subscribe" :disabled="loading"
+              class="block w-full h-full border-0 p-0 text-sm sm:text-base text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:ring-0 bg-transparent outline-none disabled:opacity-50 disabled:cursor-not-allowed" />
           </div>
           <p v-if="error" class="mt-1.5 text-xs sm:text-sm text-red-600 dark:text-red-400">
             {{ error }}
           </p>
         </div>
-        <UiInteractiveHoverButton
-          type="submit"
-          :text="loading ? 'Joining...' : 'Join'"
-          :disabled="loading || !email"
+        <UiInteractiveHoverButton type="submit" :text="loading ? 'Joining...' : 'Join'" :disabled="loading || !email"
           :class="(loading || !email ? 'pointer-events-none opacity-50 ' : '') + 'px-6 sm:px-10 py-2.5 shadow-lg shadow-sky-500/10'"
-          @click="subscribe"
-        />
+          @click="subscribe" />
       </div>
     </div>
   </div>

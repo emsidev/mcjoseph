@@ -5,18 +5,9 @@ export const useCal = () => {
     const openCalPopup = () => {
         if (import.meta.server) return;
 
-        const Cal = (window as any).Cal;
-        if (Cal) {
-            Cal("openModal", {
-                calLink: CAL_LINK,
-                config: {
-                    layout: "month_view",
-                },
-            });
-        } else {
-            // Fallback: open Cal.com in new tab if embed fails
-            window.open(`https://cal.com/${CAL_LINK}`, "_blank");
-        }
+        // Simply open Cal.com booking page in a new tab
+        // This is more reliable than the embed which has initialization issues
+        window.open(`https://cal.com/${CAL_LINK}`, "_blank");
     };
 
     return {

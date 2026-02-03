@@ -12,10 +12,18 @@
           Whether you have a question or just want to say hi, I'll try my best to get back to you!
         </p>
         <ClientOnly>
-          <div class="flex flex-wrap items-center gap-3 pt-2">
-            <AppBookCallButton />
-            <AppViewResumeButton />
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+            <AppBookCallButton class="w-full sm:w-auto" />
+            <AppViewResumeButton class="w-full sm:w-auto" />
           </div>
+          <template #fallback>
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+              <UButton label="Book a Call" color="sky" size="lg"
+                class="rounded-full px-6 font-semibold w-full sm:w-auto" />
+              <UButton label="View Resume" color="white" variant="solid" size="lg"
+                class="rounded-full px-6 font-semibold w-full sm:w-auto justify-center" />
+            </div>
+          </template>
         </ClientOnly>
       </section>
 
@@ -23,6 +31,11 @@
       <section>
         <h2 class="uppercase text-xs font-semibold text-gray-400 mb-6">SEND A MESSAGE</h2>
         <form @submit.prevent="onSubmit" class="space-y-4">
+          <!-- Honeypot field (hidden from humans) -->
+          <div class="sr-only" aria-hidden="true">
+            <input v-model="form.fax" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
           <div class="grid grid-cols-1 gap-4">
             <!-- Name Input -->
             <div>
@@ -231,7 +244,8 @@ const form = reactive({
   name: '',
   email: '',
   message: '',
-  services: [] as string[]
+  services: [] as string[],
+  fax: '' // Honeypot field
 });
 
 const errors = reactive({
@@ -349,6 +363,12 @@ onBeforeUnmount(() => {
 });
 
 async function onSubmit() {
+  // Honeypot check: if the hidden field is filled, silently ignore
+  if (form.fax) {
+    console.warn('Bot detected via honeypot');
+    return;
+  }
+
   if (!validateForm()) {
     return;
   }
