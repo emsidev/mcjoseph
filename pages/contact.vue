@@ -204,8 +204,10 @@
           </div>
 
           <div class="pt-2">
-            <UiInteractiveHoverButton type="submit" :text="loading ? 'Sending...' : 'Send Message'" :disabled="loading"
-              class="w-full sm:w-auto px-10 shadow-lg shadow-sky-500/10" />
+            <ConfettiButton ref="confettiButtonRef" class="w-full sm:w-auto">
+              <UiInteractiveHoverButton type="submit" :text="loading ? 'Sending...' : 'Send Message'"
+                :disabled="loading" class="w-full sm:w-auto px-10 shadow-lg shadow-sky-500/10" />
+            </ConfettiButton>
           </div>
         </form>
       </section>
@@ -222,7 +224,10 @@
 
 <script setup lang="ts">
 import { reactive, ref, onMounted, onBeforeUnmount } from 'vue';
+import { ConfettiButton } from "~/components/ui/confetti";
 import { useSupabase } from '~/lib/supabase';
+
+const confettiButtonRef = ref<InstanceType<typeof ConfettiButton> | null>(null);
 
 const firstOptionRef = ref<HTMLElement | null>(null);
 const focusedOptionIndex = ref(-1);
@@ -385,6 +390,8 @@ async function onSubmit() {
     ]);
 
     if (error) throw error;
+
+    confettiButtonRef.value?.fire();
 
     // Reset form on success
     form.name = '';

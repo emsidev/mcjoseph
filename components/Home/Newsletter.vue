@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { ConfettiButton } from "~/components/ui/confetti";
 import { useSupabase } from '~/lib/supabase';
+
+const confettiButtonRef = ref<InstanceType<typeof ConfettiButton> | null>(null);
 
 const toast = useToast();
 const email = ref('');
@@ -58,6 +61,8 @@ async function subscribe() {
       }
       throw supabaseError;
     }
+
+    confettiButtonRef.value?.fire();
 
     // Show success toast
     toast.add({
@@ -121,9 +126,11 @@ async function subscribe() {
             {{ error }}
           </p>
         </div>
-        <UiInteractiveHoverButton type="submit" :text="loading ? 'Joining...' : 'Join'" :disabled="loading || !email"
-          :class="(loading || !email ? 'pointer-events-none opacity-50 ' : '') + 'px-6 sm:px-10 py-2.5 shadow-lg shadow-sky-500/10'"
-          @click="subscribe" />
+        <ConfettiButton ref="confettiButtonRef" class="w-full sm:w-auto">
+          <UiInteractiveHoverButton type="submit" :text="loading ? 'Joining...' : 'Join'" :disabled="loading || !email"
+            :class="(loading || !email ? 'pointer-events-none opacity-50 ' : '') + 'w-full sm:w-auto px-6 sm:px-10 py-2.5 shadow-lg shadow-sky-500/10'"
+            @click="subscribe" />
+        </ConfettiButton>
       </div>
     </div>
   </div>

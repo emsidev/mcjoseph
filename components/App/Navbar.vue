@@ -6,16 +6,17 @@
         <template v-for="item in items" :key="item.path">
           <UiDockIcon class="bg-transparent" :size="32">
             <UTooltip :text="item.name" :ui="{ popper: { strategy: 'absolute' } }">
-              <Motion :initial="{ scale: 1, rotate: 0 }" :whileHover="{ scale: 1.1, rotate: 2 }"
-                :whileTap="{ scale: 0.95 }" :transition="{ type: 'spring', stiffness: 400, damping: 17 }">
-                <ULink :to="item.path"
-                  class="flex items-center justify-center rounded-full text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400 w-10 h-10 sm:w-14 sm:h-14"
-                  active-class="text-primary-600 dark:text-primary-400 bg-gray-100 dark:bg-white/10 w-8 h-8 sm:w-9 sm:h-9">
+              <ULink :to="item.path"
+                class="flex items-center justify-center rounded-full text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400 w-10 h-10 sm:w-14 sm:h-14"
+                active-class="text-primary-600 dark:text-primary-400 bg-gray-100 dark:bg-white/10 w-8 h-8 sm:w-9 sm:h-9">
+                <Motion :initial="{ scale: 1, rotate: 0 }" :whileHover="{ scale: 1.1, rotate: 2 }"
+                  :whileTap="{ scale: 0.9, rotate: -5 }" :transition="{ type: 'spring', stiffness: 400, damping: 10 }"
+                  class="flex items-center justify-center w-full h-full">
                   <Icon aria-hidden="true" :name="item.icon"
                     class="w-5 h-5 sm:w-[var(--dock-icon-size,20px)] sm:h-[var(--dock-icon-size,20px)]" />
                   <span class="sr-only">{{ item.name }}</span>
-                </ULink>
-              </Motion>
+                </Motion>
+              </ULink>
             </UTooltip>
           </UiDockIcon>
         </template>

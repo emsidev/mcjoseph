@@ -15,8 +15,8 @@ const isDark = computed({
 
 <template>
   <UTooltip text="Toggle theme" :ui="{ popper: { strategy: 'absolute' } }">
-    <Motion :initial="{ scale: 1, rotate: 0 }" :whileHover="{ scale: 1.1, rotate: 5 }" :whileTap="{ scale: 0.9 }"
-      :transition="{ type: 'spring', stiffness: 400, damping: 17 }">
+    <Motion :initial="{ scale: 1, rotate: 0 }" :whileHover="{ scale: 1.1, rotate: 5 }"
+      :whileTap="{ scale: 0.85, rotate: -15 }" :transition="{ type: 'spring', stiffness: 400, damping: 10 }">
       <button
         class="relative flex h-full w-full items-center justify-center rounded-full text-gray-600 transition-colors hover:text-primary-500 dark:text-gray-400 dark:hover:text-primary-400"
         @click="isDark = !isDark">

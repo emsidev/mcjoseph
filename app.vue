@@ -25,11 +25,11 @@ useSeoMeta({
   <AppNavbar />
   <AppMobileNavbar />
   <div ref="themeToggleRef" :style="styles"
-    class="fixed top-0 right-0 md:m-7 m-4 flex items-center justify-center gap-3 z-50 transition-transform duration-300">
+    class="fixed top-0 right-0 md:p-7 p-4 flex items-center justify-center gap-3 z-50">
 
     <UTooltip text="Bookmarks" :ui="{ popper: { strategy: 'absolute' } }">
-      <Motion :initial="{ scale: 1, y: 0 }" :whileHover="{ scale: 1.1, y: -2 }" :whileTap="{ scale: 0.95 }"
-        :transition="{ type: 'spring', stiffness: 400, damping: 17 }">
+      <Motion :initial="{ scale: 1, y: 0 }" :whileHover="{ scale: 1.1, y: -2 }" :whileTap="{ scale: 0.85, rotate: 15 }"
+        :transition="{ type: 'spring', stiffness: 400, damping: 10 }">
         <ULink to="/bookmarks"
           class="flex items-center md:hidden justify-center w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/80 dark:bg-black/80 backdrop-blur-md border border-gray-200 dark:border-white/10 shadow-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
           active-class="text-primary-600 dark:text-primary-400">
