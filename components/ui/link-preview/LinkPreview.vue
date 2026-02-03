@@ -44,7 +44,7 @@ const hasPopped = ref(false);
 const isMobile = ref(false);
 
 if (process.client) {
-  isMobile.value = window.innerWidth < 768;
+  isMobile.value = window.innerWidth < 1024;
 }
 
 // Generate preview URL
@@ -155,13 +155,20 @@ function handleImageLoad() {
 onMounted(() => {
   if (process.client) {
     const handleResize = () => {
-      isMobile.value = window.innerWidth < 768;
+      isMobile.value = window.innerWidth < 1024;
+    };
+    const handleScroll = () => {
+      if (isMobile.value && isVisible.value) {
+        hidePreview();
+      }
     };
     window.addEventListener('resize', handleResize);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     document.addEventListener('click', handleClickOutside);
     
     return () => {
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
       document.removeEventListener('click', handleClickOutside);
     };
   }

@@ -18,7 +18,7 @@ const buttonRef = ref<HTMLButtonElement>();
   <button
     ref="buttonRef"
     :disabled="disabled"
-    class="group relative w-auto cursor-pointer overflow-hidden rounded-full border border-sky-500 bg-sky-500 p-2 px-6 text-center font-semibold text-white disabled:opacity-50 disabled:cursor-not-allowed"
+    class="group relative w-auto cursor-pointer overflow-hidden rounded-full border border-sky-500 bg-sky-500 p-2 px-6 text-center font-semibold text-white disabled:opacity-50 disabled:cursor-not-allowed justify-center"
     :class="[props.class]"
   >
     <div class="flex items-center justify-center gap-2">

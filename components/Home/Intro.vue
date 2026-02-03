@@ -48,24 +48,24 @@
     </p>
 
     <ClientOnly>
-      <div class="flex flex-wrap items-center gap-3 pt-2">
-        <AppBookCallButton />
-        <AppViewResumeButton />
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+        <AppBookCallButton class="w-full sm:w-auto" />
+        <AppViewResumeButton class="w-full sm:w-auto" />
       </div>
       <template #fallback>
-        <div class="flex flex-wrap items-center gap-3 pt-2">
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
           <UButton 
             label="Book a Call" 
             color="sky" 
             size="lg" 
-            class="rounded-full px-6 font-semibold" 
+            class="rounded-full px-6 font-semibold w-full sm:w-auto" 
           />
           <UButton
             label="View Resume"
-            color="secondary"
+            color="white"
             variant="solid"
             size="lg"
-            class="rounded-full px-6 font-semibold"
+            class="rounded-full px-6 font-semibold w-full sm:w-auto justify-center"
           />
         </div>
       </template>

@@ -6,7 +6,7 @@
     color="secondary"
     variant="solid"
     size="lg"
-    class="rounded-full px-6 font-semibold"
+    class="rounded-full px-6 font-semibold justify-center"
     v-bind="$attrs"
   >
     View Resume

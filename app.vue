@@ -16,13 +16,14 @@ useSeoMeta({
 <template>
   <NuxtLoadingIndicator color="#0ea5e9" />
   <AppNavbar />
-  <div class="h-32"></div>
-  <UContainer>
+  <AppMobileNavbar />
+  <div class="h-10 md:h-32"></div>
+  <UContainer class="pb-20 md:pb-0">
     <NuxtPage />
     <UNotifications />
   </UContainer>
-  <div class="h-32"></div>
-  <AppFooter />
+  <div class="h-10 md:h-32"></div>
+  <AppFooter class="mb-16 md:mb-0" />
 </template>
 
 <style>
