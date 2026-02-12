@@ -2,7 +2,7 @@
   <div class="space-y-3">
     <ProfilePreview>
       <NuxtImg src="/avatar.png" alt="Mc Joseph Agbanlog"
-        class="ring-2 border ring-gray-200 border-gray-300 dark:ring-white/10 dark:border-gray-800 hover:ring-4 transition-all duration-300 bg-gray-200 dark:bg-gray-900 rounded-full h-12 w-12 sm:h-16 sm:w-16 cursor-pointer"
+        class="ring-2 border ring-gray-200 border-gray-300 dark:ring-white/10 dark:border-gray-800 hover:ring-4 transition-all duration-300 bg-gray-200 dark:bg-gray-900 rounded-full h-12 w-12 sm:h-16 sm:w-16 cursor-pointer avatar-breathing"
         sizes="48px sm:64px" placeholder format="webp" />
 
       <template #preview>
@@ -10,20 +10,18 @@
       </template>
     </ProfilePreview>
     <div class="h-10 sm:h-12 flex items-center">
-      <WordRotate 
-        :words="['Kumusta', 'Hi there!', 'Let\'s work together']" 
-        class="text-xl font-bold tracking-tight text-gray-800 dark:text-gray-100"
-      />
+      <WordRotate :words="['Kumusta', 'Hi there!', 'Let\'s work together']"
+        class="text-xl font-bold tracking-tight text-gray-800 dark:text-gray-100" />
     </div>
     <div class="text-gray-900 dark:text-gray-400">
-      I'm <h1 class="inline font-bold"><TextHighlight 
-        class="name-highlight" 
-        text-end-color="var(--name-text-color)"
-      >Mc Joseph Agbanlog</TextHighlight></h1>, a fullstack developer from Quezon City, Philippines. I specialize in
+      I'm <h1 class="inline font-bold">
+        <TextHighlight class="name-highlight" text-end-color="var(--name-text-color)">Mc Joseph Agbanlog</TextHighlight>
+      </h1>, a fullstack developer from Quezon City, Philippines. I specialize in
       building web applications using
       <LinkPreview url="https://dotnet.microsoft.com/en-us/apps/aspnet" link-class="underline">ASP.NET</LinkPreview>
       with
-      <LinkPreview url="https://learn.microsoft.com/en-us/aspnet/core/razor-pages" link-class="underline">Razor Pages</LinkPreview>
+      <LinkPreview url="https://learn.microsoft.com/en-us/aspnet/core/razor-pages" link-class="underline">Razor Pages
+      </LinkPreview>
       and websites using
       <LinkPreview url="https://react.dev" link-class="underline">React</LinkPreview>
       and
@@ -31,7 +29,9 @@
       I also design UI/UX in
       <LinkPreview url="https://www.figma.com" link-class="underline">Figma</LinkPreview>
       and love integrating AI into my workflow with tools like
-      <LinkPreview url="https://labs.google.com/search/experiment/2" link-class="underline">Google Antigravity</LinkPreview>,
+      <LinkPreview url="https://labs.google.com/search/experiment/2" link-class="underline">Google Antigravity
+      </LinkPreview>
+      ,
       <LinkPreview url="https://claude.ai" link-class="underline">Claude</LinkPreview>,
       <LinkPreview url="https://www.figma.com/ai" link-class="underline">Figma Make</LinkPreview>,
       <LinkPreview url="https://v0.dev" link-class="underline">v0.dev</LinkPreview>,
@@ -40,33 +40,23 @@
       After years of procrastination, I've finally built my own portfolio to share to
       the internet my projects, interesting facts about me and my thoughts.
     </div>
-    <p class="text-gray-900 dark:text-gray-400">
+    <div class="text-gray-900 dark:text-gray-400">
       During the day, I work as a Fullstack Developer at
       <LinkPreview url="https://wizard.group" link-class="underline">Wizard Group</LinkPreview>,
       while my nights and weekends are dedicated to tinkering with side projects
       and building experimental applications.
-    </p>
+    </div>
 
     <ClientOnly>
-      <div class="flex flex-wrap items-center gap-3 pt-2">
-        <AppBookCallButton />
-        <AppViewResumeButton />
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+        <AppBookCallButton class="w-full sm:w-auto" />
+        <AppViewResumeButton class="w-full sm:w-auto" />
       </div>
       <template #fallback>
-        <div class="flex flex-wrap items-center gap-3 pt-2">
-          <UButton 
-            label="Book a Call" 
-            color="sky" 
-            size="lg" 
-            class="rounded-full px-6 font-semibold" 
-          />
-          <UButton
-            label="View Resume"
-            color="secondary"
-            variant="solid"
-            size="lg"
-            class="rounded-full px-6 font-semibold"
-          />
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+          <UButton label="Book a Call" color="sky" size="lg" class="rounded-full px-6 font-semibold w-full sm:w-auto" />
+          <UButton label="View Resume" color="white" variant="solid" size="lg"
+            class="rounded-full px-6 font-semibold w-full sm:w-auto justify-center" />
         </div>
       </template>
     </ClientOnly>
@@ -90,7 +80,28 @@ useSeoMeta({
 .name-highlight {
   --name-text-color: #000;
 }
+
 .dark .name-highlight {
   --name-text-color: #fff;
+}
+
+.avatar-breathing {
+  animation: avatar-breathe 3s infinite ease-in-out;
+}
+
+@keyframes avatar-breathe {
+
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(14, 165, 233, 0);
+    /* sky-500 with 0 opacity */
+  }
+
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 4px rgba(4, 173, 252, 0.918);
+    /* sky-500/30 */
+  }
 }
 </style>
