@@ -1,6 +1,6 @@
 <template>
   <UButton
-    to="/Mc Agbanlog_Resume-2025.pdf"
+    to="/Mc-Agbanlog-Resume.pdf"
     target="_blank"
     rel="noopener noreferrer"
     color="secondary"
